@@ -1,89 +1,106 @@
-<p align="center">
-  <img src="assets/banner.svg" alt="ICU-MM — Multimodal ICU Risk Prediction" width="100%">
-</p>
+# ICU Respiratory Deterioration Prediction
 
-<p align="center">
+<p>
   <img src="https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white">
   <img src="https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white">
-  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white">
-  <img src="https://img.shields.io/badge/data-MIMIC--IV%20%2F%20CXR-58a6ff">
-  <img src="https://img.shields.io/badge/explainability-SHAP-9b5cff">
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white">
+  <img src="https://img.shields.io/badge/ClinicalBERT-HuggingFace-FFD21E">
+  <img src="https://img.shields.io/badge/data-MIMIC--IV%20v3.1-58a6ff">
 </p>
 
-> **About this fork.** Maintained by [Rhea Pandita](https://github.com/RP-1106). The original project is by [Ayush Deo](https://github.com/ayushdeo/ICU-MM) and the USC GRIDS team.
->
-> This fork **audits and redesigns** the prediction task:
-> - The original 0.9998 AUROC came from label leakage. The length of each patient's data window alone separates the classes perfectly (AUROC 1.000).
-> - The outcome label had three errors. One of its rules never fired, and patients who arrived already intubated were counted as stable.
-> - After fixing both, a landmark model predicts new advanced respiratory support with **AUROC 0.83 / 0.77 / 0.72** at 3 / 6 / 12 h. Fine-tuned ClinicalBERT trails it (0.68 at 12 h).
->
-> **Start with [`LEAKAGE_AUDIT.md`](LEAKAGE_AUDIT.md).** The notebooks `01`–`05` in `notebooks/` reproduce every number, and `results/` holds summary metrics.
-> The results table and app described below are from the **original** pipeline and are affected by the leak.
+This project predicts **which ICU patients will need advanced breathing support in the next hours**, using only information available at the time of prediction. It is built on MIMIC-IV (91K ICU stays, 35.5M lab records) and designed around one rule: *the model may only see what a clinician would know at that moment.*
 
-# ICU-MM · Multimodal ICU Risk Prediction
+| Predict after | At-risk stays | Events | **Test AUROC** | Test AUPRC | AUPRC at chance |
+|---|---|---|---|---|---|
+| 3 h after ICU admission | 60,561 | 13,513 | **0.830** | 0.714 | 0.223 |
+| 6 h | 53,518 | 6,837 | **0.768** | 0.456 | 0.126 |
+| 12 h | 48,706 | 3,835 | **0.716** | 0.181 | 0.074 |
 
-> Predicting **respiratory failure** in ICU patients by fusing three very different signals — structured labs & vitals, free-text radiology reports, and chest X-ray images — into a single, explainable risk score on **MIMIC-IV / MIMIC-CXR**.
-
-The interesting research question isn't just "can we predict it," but **which modalities actually carry the signal** — so every combination is ablated head-to-head on identical splits.
+The strongest predictor is the patient's **recent oxygen flow rate**. A fine-tuned ClinicalBERT on the same information reaches 0.678 AUROC at 12 h, below the gradient-boosted model.
 
 ---
 
-## 🧠 Architecture
+## The prediction task
 
-<p align="center">
-  <img src="assets/architecture.svg" alt="Multimodal fusion architecture" width="100%">
-</p>
+**Landmark design.** At a fixed time *L* after ICU admission (3, 6 or 12 h):
 
-Each modality is embedded independently, PCA-compressed, then **late-fused** into a 219-dimensional vector and classified with logistic regression. Radiology text is embedded with **ClinicalBERT**; chest X-rays with **BioViL**. Predictions are explained per-feature with **SHAP** inside a Streamlit app.
+1. **At-risk cohort.** Include patients who are still in the ICU and have **not yet** needed advanced respiratory support.
+2. **Features.** Use only data recorded before *L*. Every patient gets exactly the same observation window.
+3. **Outcome.** Predict whether the patient **starts advanced respiratory support between *L* and 48 h**.
 
-## 📊 Results & modality ablation
+**Advanced respiratory support** means any of:
+- invasive ventilation;
+- non-invasive ventilation (BiPAP/CPAP);
+- high-flow nasal cannula, charted as the device or as an oxygen flow above 15 L/min;
+- FiO₂ ≥ 60%.
 
-Cohort of **552 ICU stays** (338 train / 96 val / 118 test). AUROC on the held-out test set:
+Support that is already running at ICU admission counts at hour 0, so those patients are never in the at-risk group.
 
-| Modalities | Test AUROC |
-|---|---|
-| Structured + CXR | **0.870** 🥇 |
-| Structured only | 0.864 |
-| **All three (fusion)** | 0.855 |
-| Structured + NLP | 0.853 |
-| CXR (BioViL) only | 0.638 |
-| NLP + CXR | 0.568 |
-| NLP radiology only | 0.536 |
+### Why this design
+- **A fixed window for everyone.** If the amount of data a patient has depends on their outcome, a model can learn from the amount instead of the content. I measured this directly: in a pipeline where the data cutoff followed the outcome, window length alone scored an AUROC of 1.00. Giving every patient an identical window rules this out by construction.
+- **An outcome built from raw charting.** The outcome is derived and checked against MIMIC's respiratory tables. The checks include unit-aware FiO₂, pre-admission intubations and device-name matching, and they found and corrected silent rule failures in an earlier label definition. See `03_label_check`.
+- **Safe respiratory features.** Because at-risk patients have had no advanced support before *L*, their earlier oxygen data (nasal cannula, flow ≤ 15 L/min, FiO₂ < 60%) cannot already satisfy the outcome. That makes it safe to use as features.
 
-**Takeaways:**
-- Structured vitals/labs carry most of the predictive signal (0.864 alone).
-- Imaging adds a real, if modest, lift — **Structured + CXR is the strongest combination (0.870)**.
-- Radiology *text* alone is near chance (0.536), a useful negative result that stops it from being over-credited.
-- Full fusion test **AUROC 0.855 / AUPRC 0.856**.
+## Features
+| Group | Count | Details |
+|---|---|---|
+| Labs | 160 | 20 common labs × mean, min, max, count, first, last, change, and mean over hours 0–6 (from −6 h to *L*) |
+| Medications | 13 | order counts, IV/drip counts, and 8 drug-category flags (0 to *L*) |
+| Oxygen therapy | 12 | device type, number of device charts, O₂ flow (max, last, count), FiO₂ (max, last, count), any supplemental O₂ |
+| Demographics | 2 | age, sex |
 
-## 🗂️ Repository structure
+## Results in detail
 
+**What each part contributes.** Test AUROC / AUPRC for the better of logistic regression and gradient boosting, using the same splits and settings throughout:
+
+| Predict after | Labs + medications | + oxygen-therapy features |
+|---|---|---|
+| 3 h | 0.789 / 0.671 | **0.830 / 0.714** |
+| 6 h | 0.697 / 0.373 | **0.768 / 0.456** |
+| 12 h | 0.658 / 0.136 | **0.716 / 0.181** |
+
+**Oxygen flow and risk.** The effect climbs steadily. At the 12 h landmark, the rate of new advanced support is:
+- 4.2% with no flow charted;
+- 8.6% at up to 6 L/min;
+- 21.2% at 7–15 L/min;
+- 25.9% above 15 L/min.
+
+I checked this feature against documentation lag, where high flow is recorded before the device is charted. Failure rates stay well below 100%, and events are not bunched right after the landmark.
+
+**ClinicalBERT (12 h).**
+- **Setup:** each patient's features written out as a text summary, then Bio_ClinicalBERT fine-tuned on every positive plus 3 negatives per positive, with a class-weighted loss, the epoch chosen by validation AUPRC, and no truncation (maximum length 384 tokens).
+- **Result:** AUROC **0.678** / AUPRC 0.149, compared with 0.716 / 0.177 for gradient boosting on the same patients. Averaging the two models did not help. When the input is essentially a table, tree models read the numbers more effectively than a language model reads them as text.
+
+## Repository
 ```
-├── scripts/                # reproducible data-build pipeline (run in order)
-│   ├── build_cohort.py                     # define ICU cohort
-│   ├── build_labs.py / build_prescriptions.py
-│   └── build_respiratory_*.py              # vitals, procedures, failure labels
-├── notebooks/
-│   ├── ClinicalBERT_Train.ipynb            # radiology-text embeddings
-│   ├── GRIDS_FeatureEng_BERT_train.ipynb   # feature engineering
-│   └── Fusion_Code_Final.ipynb             # multimodal fusion + ablation
-├── models/                 # trained fusion artefacts + fusion_summary.json
-└── app/app.py              # Streamlit risk-scoring app with SHAP explanations
+notebooks/
+├── 01_leakage_audit.ipynb          # single-feature and counterfactual leakage diagnostics
+├── 02_landmark_redesign.ipynb      # vectorised landmark feature pipeline (35.5M labs, ~2 min)
+├── 03_label_check.ipynb            # outcome-definition checks against raw respiratory charting
+├── 04_landmark_v2.ipynb            # final outcome, oxygen features, model comparison, feature importance
+└── 05_clinicalbert_landmark.ipynb  # ClinicalBERT fine-tuning and comparison
+results/                            # aggregate metrics only (JSON / PNG)
+scripts/                            # MIMIC-IV extraction scripts (cohort, labs, prescriptions, respiratory tables)
 ```
 
-> Note: MIMIC is credentialed PhysioNet data, so raw and processed datasets are **not** tracked here. The build scripts regenerate everything from raw MIMIC-IV files placed under `data/raw/`.
+**Engineering notes**
+- Lab features are built with chunked, vectorised pandas and cached as Parquet. I verified the output against a reference per-patient implementation, and it matches exactly.
+- Splits are 70/15/15 **by patient** (no patient appears in two splits), with a fixed seed. Models are selected on validation, and each test set is scored once.
+- Every notebook prints summary statistics only. No patient-level data is written to the repository.
 
-## ⚙️ Run the app
+## Reproducing
+1. Get credentialed access to [MIMIC-IV](https://physionet.org/content/mimiciv/) and build the tables in `data/comb/` with `scripts/`.
+2. Run notebooks `02 → 05` in Google Colab. `05` needs a T4 GPU; the others run on CPU.
+3. Metrics are written as JSON files, matching those in `results/`.
 
-```bash
-pip install -r app/requirements.txt
-streamlit run app/app.py
-```
+## Limitations and next steps
+- **Vital signs are not included yet.** SpO₂, respiratory rate and heart rate come from MIMIC-IV `chartevents` and are the most likely source of further improvement.
+- Calibration and alert-threshold selection are not yet evaluated.
+- The outcome uses documented respiratory support as a stand-in for respiratory failure, and the data comes from a single hospital (MIMIC-IV). External validation, for example on eICU, would be needed before any real use.
 
-## 🧰 Tech stack
+## Acknowledgements
+This project builds on the codebase and MIMIC-IV extraction scripts of **[ICU-MM](https://github.com/ayushdeo/ICU-MM)**, a USC GRIDS team project led by Ayush Deo (MIT License). The landmark framework, outcome definition, oxygen-therapy features, diagnostics and all results above are this project's own work.
 
-`ClinicalBERT` · `BioViL` · `scikit-learn` (PCA + logistic regression) · `SHAP` · `Streamlit` · `pandas` · MIMIC-IV / MIMIC-CXR
+*MIMIC-IV is credentialed PhysioNet data. This repository contains code and aggregate metrics only.*
 
----
-
-<sub>Author: **Ayush Deo** · MS CS @ USC · [github.com/ayushdeo](https://github.com/ayushdeo) · Multimodal clinical ML</sub>
+<sub>Rhea Pandita · MS CS @ USC · [github.com/RP-1106](https://github.com/RP-1106)</sub>
