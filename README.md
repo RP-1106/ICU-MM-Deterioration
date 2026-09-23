@@ -103,4 +103,3 @@ This project builds on the codebase and MIMIC-IV extraction scripts of **[ICU-MM
 
 *MIMIC-IV is credentialed PhysioNet data. This repository contains code and aggregate metrics only.*
 
-<sub>Rhea Pandita · MS CS @ USC · [github.com/RP-1106](https://github.com/RP-1106)</sub>
