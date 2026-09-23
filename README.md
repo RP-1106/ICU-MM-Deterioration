@@ -10,6 +10,11 @@
   <img src="https://img.shields.io/badge/explainability-SHAP-9b5cff">
 </p>
 
+> **About this fork** — maintained by [Rhea Pandita](https://github.com/RP-1106). Original project by [Ayush Deo](https://github.com/ayushdeo/ICU-MM) and the USC GRIDS team.
+> This fork adds a **label-leakage audit** of the original pipeline and a **landmark-based redesign** that fixes it.
+> Start with [`LEAKAGE_AUDIT.md`](LEAKAGE_AUDIT.md) and the two new notebooks in `notebooks/` (`01_leakage_audit.ipynb`, `02_landmark_redesign.ipynb`).
+> The results tables further down are from the original pipeline.
+
 # ICU-MM · Multimodal ICU Risk Prediction
 
 > Predicting **respiratory failure** in ICU patients by fusing three very different signals — structured labs & vitals, free-text radiology reports, and chest X-ray images — into a single, explainable risk score on **MIMIC-IV / MIMIC-CXR**.

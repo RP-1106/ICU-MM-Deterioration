@@ -12,3 +12,10 @@ __pycache__/
 
 .DS_Store
 .vscode/
+
+# ── Added: never commit MIMIC-derived data of any kind ──
+*.csv
+*.parquet
+*.pkl.gz
+outputs/
+.ipynb_checkpoints/
