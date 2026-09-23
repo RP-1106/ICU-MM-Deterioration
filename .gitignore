@@ -19,3 +19,4 @@ __pycache__/
 *.pkl.gz
 outputs/
 .ipynb_checkpoints/
+.venv/

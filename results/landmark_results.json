@@ -1,0 +1,116 @@
+{
+  "3h": {
+    "n_train": 48570,
+    "n_val": 10264,
+    "n_test": 10450,
+    "n_positive_total": 13114,
+    "positive_rate_train": 0.1892,
+    "n_features": 175,
+    "metrics": [
+      {
+        "model": "LogReg",
+        "split": "val",
+        "AUROC": 0.7532,
+        "AUPRC": 0.5422,
+        "AUPRC_chance": 0.1895
+      },
+      {
+        "model": "LogReg",
+        "split": "test",
+        "AUROC": 0.7419,
+        "AUPRC": 0.5392,
+        "AUPRC_chance": 0.1893
+      },
+      {
+        "model": "GradBoost",
+        "split": "val",
+        "AUROC": 0.7759,
+        "AUPRC": 0.6045,
+        "AUPRC_chance": 0.1895
+      },
+      {
+        "model": "GradBoost",
+        "split": "test",
+        "AUROC": 0.7745,
+        "AUPRC": 0.6021,
+        "AUPRC_chance": 0.1893
+      }
+    ]
+  },
+  "6h": {
+    "n_train": 43553,
+    "n_val": 9302,
+    "n_test": 9481,
+    "n_positive_total": 6623,
+    "positive_rate_train": 0.1063,
+    "n_features": 175,
+    "metrics": [
+      {
+        "model": "LogReg",
+        "split": "val",
+        "AUROC": 0.6811,
+        "AUPRC": 0.29,
+        "AUPRC_chance": 0.107
+      },
+      {
+        "model": "LogReg",
+        "split": "test",
+        "AUROC": 0.6757,
+        "AUPRC": 0.268,
+        "AUPRC_chance": 0.1055
+      },
+      {
+        "model": "GradBoost",
+        "split": "val",
+        "AUROC": 0.6946,
+        "AUPRC": 0.3243,
+        "AUPRC_chance": 0.107
+      },
+      {
+        "model": "GradBoost",
+        "split": "test",
+        "AUROC": 0.7009,
+        "AUPRC": 0.3098,
+        "AUPRC_chance": 0.1055
+      }
+    ]
+  },
+  "12h": {
+    "n_train": 40180,
+    "n_val": 8552,
+    "n_test": 8573,
+    "n_positive_total": 3704,
+    "positive_rate_train": 0.0638,
+    "n_features": 175,
+    "metrics": [
+      {
+        "model": "LogReg",
+        "split": "val",
+        "AUROC": 0.6386,
+        "AUPRC": 0.1161,
+        "AUPRC_chance": 0.0672
+      },
+      {
+        "model": "LogReg",
+        "split": "test",
+        "AUROC": 0.6549,
+        "AUPRC": 0.119,
+        "AUPRC_chance": 0.0659
+      },
+      {
+        "model": "GradBoost",
+        "split": "val",
+        "AUROC": 0.6281,
+        "AUPRC": 0.1054,
+        "AUPRC_chance": 0.0672
+      },
+      {
+        "model": "GradBoost",
+        "split": "test",
+        "AUROC": 0.6541,
+        "AUPRC": 0.1166,
+        "AUPRC_chance": 0.0659
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "n_train": 63852,
+  "n_test": 13769,
+  "train_positive_rate": 0.37972185679383574,
+  "single_feature_test_auroc": {
+    "feature_window_hours": 0.891,
+    "stay_duration_hours (future info)": 0.6751,
+    "total lab draws (sum of *_count)": 0.7135,
+    "total_presc": 0.7013,
+    "# labs never measured": 0.747,
+    "clinical_text word count": 0.7722
+  },
+  "models": [
+    {
+      "feature_set": "A. as-built",
+      "model": "LogReg",
+      "n_features": 179,
+      "test_AUROC": 0.9155,
+      "test_AUPRC": 0.9214
+    },
+    {
+      "feature_set": "A. as-built",
+      "model": "GradBoost",
+      "n_features": 179,
+      "test_AUROC": 0.9991,
+      "test_AUPRC": 0.9991
+    },
+    {
+      "feature_set": "B. - window columns",
+      "model": "LogReg",
+      "n_features": 175,
+      "test_AUROC": 0.8909,
+      "test_AUPRC": 0.8808
+    },
+    {
+      "feature_set": "B. - window columns",
+      "model": "GradBoost",
+      "n_features": 175,
+      "test_AUROC": 0.9372,
+      "test_AUPRC": 0.9296
+    },
+    {
+      "feature_set": "C. - window + counts",
+      "model": "LogReg",
+      "n_features": 151,
+      "test_AUROC": 0.8737,
+      "test_AUPRC": 0.8525
+    },
+    {
+      "feature_set": "C. - window + counts",
+      "model": "GradBoost",
+      "n_features": 151,
+      "test_AUROC": 0.9145,
+      "test_AUPRC": 0.9004
+    }
+  ],
+  "timer_test_mean_risk_stable": {
+    "true_window": 0.0014,
+    "window_set_to_2h": 0.9998
+  },
+  "abs_window_minus_12_test_auroc": 1.0,
+  "pct_positives_window_over_12h": 0.1063
+}
