@@ -1,0 +1,150 @@
+{
+  "chart_rows_by_label": {
+    "O2 Delivery Device(s)": 2069683,
+    "Inspired O2 Fraction": 1144289,
+    "Ventilator Type": 778405,
+    "O2 Flow": 769310
+  },
+  "proc_rows_by_label": {
+    "Invasive Ventilation": 35479,
+    "Intubation": 9777,
+    "Non-invasive Ventilation": 3238
+  },
+  "fio2": {
+    "label_names": [
+      "Inspired O2 Fraction"
+    ],
+    "rows_matching_label_script": 0,
+    "quantiles": {
+      "0.01": 28.0,
+      "0.05": 30.0,
+      "0.25": 40.0,
+      "0.5": 40.0,
+      "0.75": 50.0,
+      "0.95": 100.0,
+      "0.99": 100.0
+    },
+    "share_values_gt_1": 0.9988
+  },
+  "criteria": {
+    "agreement_with_label_file": 0.9999,
+    "first_trigger_share": {
+      "A_vent": 0.7915,
+      "B_o2": 0.2085
+    },
+    "stays_meeting": {
+      "A_vent": 29878,
+      "B_o2": 9600,
+      "C_as_written": 0
+    },
+    "stays_meeting_C_unit_fixed": 29239
+  },
+  "time_to_event_share": {
+    "(-inf, 0.5]": 0.2788,
+    "(0.5, 1.0]": 0.1029,
+    "(1.0, 3.0]": 0.2399,
+    "(3.0, 6.0]": 0.1872,
+    "(6.0, 12.0]": 0.0841,
+    "(12.0, 24.0]": 0.0593,
+    "(24.0, 48.0]": 0.0478
+  },
+  "vent_within_1h_share_of_positives": 0.3191,
+  "pre_landmark_signals": [
+    {
+      "L": "3h",
+      "signal before L": "any O2 device charted",
+      "stays": 51738,
+      "% of at-risk": 72.2,
+      "fail rate with signal": 12.8,
+      "fail rate overall": 18.9
+    },
+    {
+      "L": "3h",
+      "signal before L": "ETT / trach device charted",
+      "stays": 6114,
+      "% of at-risk": 8.5,
+      "fail rate with signal": 16.4,
+      "fail rate overall": 18.9
+    },
+    {
+      "L": "3h",
+      "signal before L": "ventilator mode charted",
+      "stays": 5753,
+      "% of at-risk": 8.0,
+      "fail rate with signal": 18.9,
+      "fail rate overall": 18.9
+    },
+    {
+      "L": "3h",
+      "signal before L": "FiO2 charted",
+      "stays": 9711,
+      "% of at-risk": 13.6,
+      "fail rate with signal": 20.7,
+      "fail rate overall": 18.9
+    },
+    {
+      "L": "6h",
+      "signal before L": "any O2 device charted",
+      "stays": 56445,
+      "% of at-risk": 87.7,
+      "fail rate with signal": 9.6,
+      "fail rate overall": 10.7
+    },
+    {
+      "L": "6h",
+      "signal before L": "ETT / trach device charted",
+      "stays": 7327,
+      "% of at-risk": 11.4,
+      "fail rate with signal": 9.6,
+      "fail rate overall": 10.7
+    },
+    {
+      "L": "6h",
+      "signal before L": "ventilator mode charted",
+      "stays": 6917,
+      "% of at-risk": 10.8,
+      "fail rate with signal": 10.2,
+      "fail rate overall": 10.7
+    },
+    {
+      "L": "6h",
+      "signal before L": "FiO2 charted",
+      "stays": 11062,
+      "% of at-risk": 17.2,
+      "fail rate with signal": 14.2,
+      "fail rate overall": 10.7
+    },
+    {
+      "L": "12h",
+      "signal before L": "any O2 device charted",
+      "stays": 55881,
+      "% of at-risk": 94.6,
+      "fail rate with signal": 6.6,
+      "fail rate overall": 6.5
+    },
+    {
+      "L": "12h",
+      "signal before L": "ETT / trach device charted",
+      "stays": 7368,
+      "% of at-risk": 12.5,
+      "fail rate with signal": 6.4,
+      "fail rate overall": 6.5
+    },
+    {
+      "L": "12h",
+      "signal before L": "ventilator mode charted",
+      "stays": 6824,
+      "% of at-risk": 11.5,
+      "fail rate with signal": 6.5,
+      "fail rate overall": 6.5
+    },
+    {
+      "L": "12h",
+      "signal before L": "FiO2 charted",
+      "stays": 11117,
+      "% of at-risk": 18.8,
+      "fail rate with signal": 9.8,
+      "fail rate overall": 6.5
+    }
+  ]
+}

@@ -10,10 +10,15 @@
   <img src="https://img.shields.io/badge/explainability-SHAP-9b5cff">
 </p>
 
-> **About this fork** — maintained by [Rhea Pandita](https://github.com/RP-1106). Original project by [Ayush Deo](https://github.com/ayushdeo/ICU-MM) and the USC GRIDS team.
-> This fork adds a **label-leakage audit** of the original pipeline and a **landmark-based redesign** that fixes it.
-> Start with [`LEAKAGE_AUDIT.md`](LEAKAGE_AUDIT.md) and the two new notebooks in `notebooks/` (`01_leakage_audit.ipynb`, `02_landmark_redesign.ipynb`).
-> The results tables further down are from the original pipeline.
+> **About this fork.** Maintained by [Rhea Pandita](https://github.com/RP-1106). The original project is by [Ayush Deo](https://github.com/ayushdeo/ICU-MM) and the USC GRIDS team.
+>
+> This fork **audits and redesigns** the prediction task:
+> - The original 0.9998 AUROC came from label leakage. The length of each patient's data window alone separates the classes perfectly (AUROC 1.000).
+> - The outcome label had three errors. One of its rules never fired, and patients who arrived already intubated were counted as stable.
+> - After fixing both, a landmark model predicts new advanced respiratory support with **AUROC 0.83 / 0.77 / 0.72** at 3 / 6 / 12 h. Fine-tuned ClinicalBERT trails it (0.68 at 12 h).
+>
+> **Start with [`LEAKAGE_AUDIT.md`](LEAKAGE_AUDIT.md).** The notebooks `01`–`05` in `notebooks/` reproduce every number, and `results/` holds summary metrics.
+> The results table and app described below are from the **original** pipeline and are affected by the leak.
 
 # ICU-MM · Multimodal ICU Risk Prediction
 

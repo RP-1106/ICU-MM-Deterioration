@@ -1,0 +1,54 @@
+{
+  "12h": {
+    "best_epoch_by_val_AUPRC": 3,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.6683,
+        "val_AUROC": 0.6813,
+        "val_AUPRC": 0.157,
+        "val_AUPRC_chance": 0.0832
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.6454,
+        "val_AUROC": 0.6958,
+        "val_AUPRC": 0.1634,
+        "val_AUPRC_chance": 0.0832
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.6349,
+        "val_AUROC": 0.6944,
+        "val_AUPRC": 0.1649,
+        "val_AUPRC_chance": 0.0832
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.6263,
+        "val_AUROC": 0.6934,
+        "val_AUPRC": 0.1649,
+        "val_AUPRC_chance": 0.0832
+      }
+    ],
+    "test": {
+      "ClinicalBERT": {
+        "AUROC": 0.6776,
+        "AUPRC": 0.1488,
+        "AUPRC_chance": 0.0739
+      },
+      "GradBoost (structured)": {
+        "AUROC": 0.7158,
+        "AUPRC": 0.1771,
+        "AUPRC_chance": 0.0739
+      },
+      "Average of both": {
+        "AUROC": 0.7084,
+        "AUPRC": 0.1727,
+        "AUPRC_chance": 0.0739
+      }
+    },
+    "n_train_sample": 10748,
+    "n_test": 7241
+  }
+}

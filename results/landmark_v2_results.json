@@ -1,0 +1,377 @@
+{
+  "3h": {
+    "v1": {
+      "n_train": 48570,
+      "n_val": 10264,
+      "n_test": 10450,
+      "n_positive_total": 13114,
+      "positive_rate_train": 0.1892,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.7532,
+          "AUPRC": 0.5422,
+          "AUPRC_chance": 0.1895
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.7419,
+          "AUPRC": 0.5392,
+          "AUPRC_chance": 0.1893
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.7759,
+          "AUPRC": 0.6045,
+          "AUPRC_chance": 0.1895
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.7745,
+          "AUPRC": 0.6021,
+          "AUPRC_chance": 0.1893
+        }
+      ]
+    },
+    "v2": {
+      "n_train": 42360,
+      "n_val": 9093,
+      "n_test": 9108,
+      "n_positive_total": 13513,
+      "positive_rate_train": 0.2232,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.7689,
+          "AUPRC": 0.6359,
+          "AUPRC_chance": 0.2225
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.7634,
+          "AUPRC": 0.6425,
+          "AUPRC_chance": 0.2234
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.7905,
+          "AUPRC": 0.6704,
+          "AUPRC_chance": 0.2225
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.7885,
+          "AUPRC": 0.6713,
+          "AUPRC_chance": 0.2234
+        }
+      ]
+    },
+    "v2 + resp": {
+      "n_train": 42360,
+      "n_val": 9093,
+      "n_test": 9108,
+      "n_positive_total": 13513,
+      "positive_rate_train": 0.2232,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.8006,
+          "AUPRC": 0.668,
+          "AUPRC_chance": 0.2225
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.8012,
+          "AUPRC": 0.6777,
+          "AUPRC_chance": 0.2234
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.8279,
+          "AUPRC": 0.7095,
+          "AUPRC_chance": 0.2225
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.8298,
+          "AUPRC": 0.7135,
+          "AUPRC_chance": 0.2234
+        }
+      ],
+      "top10_permutation_importance_val_AUPRC": {
+        "o2dev_charts": 0.0653,
+        "o2_flow_last": 0.0338,
+        "iv_drip_count": 0.0183,
+        "Hemoglobin_delta": 0.0153,
+        "any_supplemental_o2": 0.0141,
+        "Hemoglobin_early_mean": 0.0086,
+        "total_presc": 0.0056,
+        "Glucose_early_mean": 0.005,
+        "iv_count": 0.0039,
+        "unique_drugs": 0.0024
+      }
+    }
+  },
+  "6h": {
+    "v1": {
+      "n_train": 43553,
+      "n_val": 9302,
+      "n_test": 9481,
+      "n_positive_total": 6623,
+      "positive_rate_train": 0.1063,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.6811,
+          "AUPRC": 0.29,
+          "AUPRC_chance": 0.107
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.6757,
+          "AUPRC": 0.268,
+          "AUPRC_chance": 0.1055
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.6946,
+          "AUPRC": 0.3243,
+          "AUPRC_chance": 0.107
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.7009,
+          "AUPRC": 0.3098,
+          "AUPRC_chance": 0.1055
+        }
+      ]
+    },
+    "v2": {
+      "n_train": 37355,
+      "n_val": 8175,
+      "n_test": 7988,
+      "n_positive_total": 6837,
+      "positive_rate_train": 0.1292,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.6807,
+          "AUPRC": 0.3457,
+          "AUPRC_chance": 0.1223
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.6853,
+          "AUPRC": 0.3393,
+          "AUPRC_chance": 0.1263
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.6941,
+          "AUPRC": 0.3548,
+          "AUPRC_chance": 0.1223
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.6969,
+          "AUPRC": 0.3725,
+          "AUPRC_chance": 0.1263
+        }
+      ]
+    },
+    "v2 + resp": {
+      "n_train": 37355,
+      "n_val": 8175,
+      "n_test": 7988,
+      "n_positive_total": 6837,
+      "positive_rate_train": 0.1292,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.7422,
+          "AUPRC": 0.3913,
+          "AUPRC_chance": 0.1223
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.7518,
+          "AUPRC": 0.4073,
+          "AUPRC_chance": 0.1263
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.7579,
+          "AUPRC": 0.4169,
+          "AUPRC_chance": 0.1223
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.7684,
+          "AUPRC": 0.4556,
+          "AUPRC_chance": 0.1263
+        }
+      ],
+      "top10_permutation_importance_val_AUPRC": {
+        "o2_flow_last": 0.0758,
+        "Hemoglobin_count": 0.0259,
+        "iv_drip_count": 0.0114,
+        "Hemoglobin_delta": 0.0112,
+        "o2dev_charts": 0.0095,
+        "any_supplemental_o2": 0.0084,
+        "o2_flow_count": 0.0028,
+        "unique_drugs": 0.0024,
+        "Urea_Nitrogen_last": 0.0023,
+        "fio2_last": 0.0022
+      }
+    }
+  },
+  "12h": {
+    "v1": {
+      "n_train": 40180,
+      "n_val": 8552,
+      "n_test": 8573,
+      "n_positive_total": 3704,
+      "positive_rate_train": 0.0638,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.6386,
+          "AUPRC": 0.1161,
+          "AUPRC_chance": 0.0672
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.6549,
+          "AUPRC": 0.119,
+          "AUPRC_chance": 0.0659
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.6281,
+          "AUPRC": 0.1054,
+          "AUPRC_chance": 0.0672
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.6541,
+          "AUPRC": 0.1166,
+          "AUPRC_chance": 0.0659
+        }
+      ]
+    },
+    "v2": {
+      "n_train": 34099,
+      "n_val": 7366,
+      "n_test": 7241,
+      "n_positive_total": 3835,
+      "positive_rate_train": 0.0788,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.6484,
+          "AUPRC": 0.1342,
+          "AUPRC_chance": 0.0832
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.6578,
+          "AUPRC": 0.1297,
+          "AUPRC_chance": 0.0739
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.6656,
+          "AUPRC": 0.1539,
+          "AUPRC_chance": 0.0832
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.6562,
+          "AUPRC": 0.1364,
+          "AUPRC_chance": 0.0739
+        }
+      ]
+    },
+    "v2 + resp": {
+      "n_train": 34099,
+      "n_val": 7366,
+      "n_test": 7241,
+      "n_positive_total": 3835,
+      "positive_rate_train": 0.0788,
+      "metrics": [
+        {
+          "model": "LogReg",
+          "split": "val",
+          "AUROC": 0.7154,
+          "AUPRC": 0.1766,
+          "AUPRC_chance": 0.0832
+        },
+        {
+          "model": "LogReg",
+          "split": "test",
+          "AUROC": 0.7152,
+          "AUPRC": 0.1807,
+          "AUPRC_chance": 0.0739
+        },
+        {
+          "model": "GradBoost",
+          "split": "val",
+          "AUROC": 0.7351,
+          "AUPRC": 0.1968,
+          "AUPRC_chance": 0.0832
+        },
+        {
+          "model": "GradBoost",
+          "split": "test",
+          "AUROC": 0.7158,
+          "AUPRC": 0.1771,
+          "AUPRC_chance": 0.0739
+        }
+      ],
+      "top10_permutation_importance_val_AUPRC": {
+        "o2_flow_last": 0.0655,
+        "o2_flow_count": 0.0068,
+        "iv_count": 0.0064,
+        "fio2_last": 0.0061,
+        "any_supplemental_o2": 0.0051,
+        "Magnesium_delta": 0.0029,
+        "Bicarbonate_min": 0.0025,
+        "White_Blood_Cells_early_mean": 0.0021,
+        "Urea_Nitrogen_last": 0.002,
+        "Bicarbonate_last": 0.002
+      }
+    }
+  }
+}
